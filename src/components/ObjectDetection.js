@@ -165,91 +165,87 @@ const ObjectDetection = () => {
           </div>
         </div>
       )}
-      <div style={{ textAlign: 'center', padding: '20px' }}>
-        {result && (
-          <div
+      {result && (
+        <div
+          style={{
+            marginTop: '40px',
+            textAlign: 'left',
+            padding: '15px',
+            border: '2px solid #ddd',
+            borderRadius: '10px',
+            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.15)',
+          }}
+        >
+          <h2
             style={{
-              backgroundColor: '#f9f9f9',
-              padding: '20px',
-              borderRadius: '10px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-              margin: '20px 0',
-              textAlign: 'left',
+              fontSize: '1.8em',
+              color: '#333',
+              textAlign: 'center',
+              marginTop: 0,
             }}
           >
-            <h2
-              style={{
-                borderBottom: '2px solid #007bff',
-                paddingBottom: '10px',
-                marginBottom: '20px',
-                fontSize: '1.5em',
-                color: '#333',
-                textAlign: 'center',
-              }}
-            >
-              Detected Objects:
-            </h2>
-            <ul style={{ listStyleType: 'none', padding: 0 }}>
-              {result.map((item, index) => (
-                <li
-                  key={index}
+            {result && result.length === 1
+              ? 'Detected Object'
+              : 'Detected Objects'}
+          </h2>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+            }}
+          >
+            {result.map((item, index) => (
+              <div
+                key={index}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  width: '100%',
+                  marginBottom: '10px',
+                }}
+              >
+                <span
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    marginBottom: '10px',
-                    padding: '10px',
+                    display: 'inline-block',
+                    width: '30px',
+                    height: '30px',
+                    backgroundColor: colors[index],
+                    marginRight: '8px',
+                    borderRadius: '2px',
+                  }}
+                />
+                <span style={{ fontWeight: 'bold', marginRight: '5px' }}>
+                  {item.label}
+                </span>
+                <span style={{ color: '#555' }}>
+                  ({(item.score * 100).toFixed(2)}%)
+                </span>
+                <div
+                  style={{
+                    flexGrow: 1,
+                    height: '10px',
+                    backgroundColor: colors[index],
+                    marginLeft: '10px',
                     borderRadius: '5px',
-                    backgroundColor: '#fff',
-                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                    position: 'relative',
+                    overflow: 'hidden',
                   }}
                 >
-                  <span
+                  <div
                     style={{
-                      display: 'inline-block',
-                      width: '30px',
-                      height: '10px',
+                      width: `${(item.score * 100).toFixed(2)}%`,
+                      height: '100%',
                       backgroundColor: colors[index],
-                      marginRight: '8px',
-                      borderRadius: '2px',
+                      transition: 'width 0.3s ease',
                     }}
                   />
-                  <span style={{ fontWeight: 'bold', marginRight: '5px' }}>
-                    {item.label}
-                  </span>
-                  <span style={{ color: '#555' }}>
-                    ({(item.score * 100).toFixed(2)}%)
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <button
-              onClick={generateNewImage}
-              style={{
-                marginTop: '20px',
-                padding: '10px 20px',
-                backgroundColor: '#007bff',
-                color: 'white',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer',
-                transition: 'background-color 0.3s ease, transform 0.3s ease',
-                fontSize: '1em',
-                marginLeft: 'auto',
-                marginRight: 'auto',
-                display: 'block',
-              }}
-              onMouseOver={(e) => (e.target.style.backgroundColor = '#0056b3')}
-              onMouseOut={(e) => (e.target.style.backgroundColor = '#007bff')}
-              onFocus={(e) =>
-                (e.target.style.boxShadow = '0 0 0 3px rgba(0, 123, 255, 0.5)')
-              }
-              onBlur={(e) => (e.target.style.boxShadow = 'none')}
-            >
-              Generate New Image Detection
-            </button>
+                </div>
+              </div>
+            ))}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

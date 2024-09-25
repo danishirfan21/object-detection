@@ -40,3 +40,154 @@
 .generate-new-button:hover {
   background-color: #0056b3;
 }
+
+.object-detection-container {
+  text-align: center;
+  margin: 20px;
+}
+
+.dropzone {
+  border: 2px dashed #007bff;
+  padding: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.image-comparison-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.original-image,
+.output-image {
+  flex: 1;
+  margin: 0 10px;
+}
+
+.labels-container {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.generate-new-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.generate-new-button:hover {
+  background-color: #0056b3;
+}
+
+/* Add styling for the horizontal bars */
+.horizontal-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  height: 10px;
+}
+
+.object-detection-container {
+  text-align: center;
+  margin: 20px;
+}
+
+.dropzone {
+  border: 2px dashed #007bff;
+  padding: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.image-comparison-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.original-image,
+.output-image {
+  flex: 1;
+  margin: 0 10px;
+}
+
+.labels-container {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.generate-new-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.generate-new-button:hover {
+  background-color: #0056b3;
+}
+
+/* Add styling for the horizontal bars */
+.horizontal-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  height: 10px;
+}
+
+.labels-container {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+  text-align: left;
+}
+
+.labels-container h2 {
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  color: #333;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.horizontal-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  height: 10px;
+}
+
+.generate-new-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.generate-new-button:hover {
+  background-color: #0056b3;
+}
+
+.generate-new-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}
