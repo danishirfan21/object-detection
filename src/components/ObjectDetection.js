@@ -10,10 +10,18 @@ const ObjectDetection = () => {
   const [imageWidth, setImageWidth] = useState(0);
   const [imageHeight, setImageHeight] = useState(0);
   const [colors, setColors] = useState([]);
+  const apiKey = process.env.REACT_APP_HF_TOKEN;
 
   const onDrop = useCallback(async (acceptedFiles) => {
     setLoading(true);
     setError(null);
+
+    if (!apiKey) {
+      setError('Please provide a valid Hugging Face token in the .env file.');
+      setLoading(false);
+      return;
+    }
+
     const file = acceptedFiles[0];
 
     if (!file || !file.type.startsWith('image/')) {
@@ -40,7 +48,7 @@ const ObjectDetection = () => {
           {
             method: 'POST',
             headers: {
-              Authorization: `Bearer ${process.env.REACT_APP_HF_TOKEN}`,
+              Authorization: `Bearer ${apiKey}`,
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({ inputs: base64data }),
