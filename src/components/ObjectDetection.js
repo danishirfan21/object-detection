@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import './ObjectDetection.css';
 
 const ObjectDetection = () => {
   const [result, setResult] = useState(null);
@@ -8,6 +9,7 @@ const ObjectDetection = () => {
   const [imageSrc, setImageSrc] = useState('');
   const [imageWidth, setImageWidth] = useState(0);
   const [imageHeight, setImageHeight] = useState(0);
+  const [colors, setColors] = useState([]);
 
   const onDrop = useCallback(async (acceptedFiles) => {
     setLoading(true);
@@ -54,6 +56,9 @@ const ObjectDetection = () => {
 
         const responseData = await response.json();
         setResult(responseData);
+
+        const newColors = responseData.map(() => getRandomColor());
+        setColors(newColors);
       } catch (error) {
         console.error('Error uploading the file:', error);
         setError(error.message);
@@ -81,9 +86,36 @@ const ObjectDetection = () => {
     };
   };
 
+  const getRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
+  const generateNewImage = () => {
+    setResult(null);
+    setImageSrc('');
+    setImageWidth(0);
+    setImageHeight(0);
+    setColors([]);
+  };
+
   return (
-    <div>
-      <h1>Object Detection</h1>
+    <div className="object-detection-container">
+      <div
+        style={{
+          backgroundColor: '#282c34',
+          padding: '20px',
+          borderRadius: '10px',
+          color: 'white',
+          marginBottom: '20px',
+        }}
+      >
+        <h1 style={{ margin: 0, fontSize: '2.5em' }}>Object Detection</h1>
+      </div>
       <div {...getRootProps({ className: 'dropzone' })}>
         <input {...getInputProps()} />
         <p>Drag 'n' drop an image here, or click to select one</p>
@@ -91,46 +123,70 @@ const ObjectDetection = () => {
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {imageSrc && (
-        <div style={{ position: 'relative', display: 'inline-block' }}>
-          <img
-            src={imageSrc}
-            alt="Uploaded"
-            style={{ maxWidth: '100%', height: 'auto' }}
-          />
-          {result &&
-            result.map((item, index) => {
-              const { xmin, ymin, width, height } = scaleBoundingBox(item.box);
-              return (
-                <div
-                  key={index}
-                  style={{
-                    position: 'absolute',
-                    border: '2px solid red',
-                    left: xmin,
-                    top: ymin,
-                    width: width,
-                    height: height,
-                    boxSizing: 'border-box',
-                  }}
-                >
-                  <span
-                    style={{
-                      background: 'red',
-                      color: 'white',
-                      padding: '2px 4px',
-                    }}
-                  >
-                    {item.label} ({(item.score * 100).toFixed(2)}%)
-                  </span>
-                </div>
-              );
-            })}
+        <div className="image-comparison-container">
+          <div className="original-image">
+            <h2>Original Image</h2>
+            <img
+              src={imageSrc}
+              alt="Uploaded"
+              style={{ maxWidth: '100%', height: 'auto' }}
+            />
+          </div>
+          <div className="output-image">
+            <h2>Output Image</h2>
+            <div style={{ position: 'relative', display: 'inline-block' }}>
+              <img
+                src={imageSrc}
+                alt="Output"
+                style={{ maxWidth: '100%', height: 'auto' }}
+              />
+              {result &&
+                result.map((item, index) => {
+                  const { xmin, ymin, width, height } = scaleBoundingBox(
+                    item.box
+                  );
+                  const color = colors[index];
+                  return (
+                    <div
+                      key={index}
+                      style={{
+                        position: 'absolute',
+                        border: `2px solid ${color}`,
+                        left: xmin,
+                        top: ymin,
+                        width: width,
+                        height: height,
+                        boxSizing: 'border-box',
+                      }}
+                    />
+                  );
+                })}
+            </div>
+          </div>
         </div>
       )}
       {result && (
-        <div>
-          <h2>Detection Results:</h2>
-          <pre>{JSON.stringify(result, null, 2)}</pre>
+        <div className="labels-container">
+          <h2>Detected Objects:</h2>
+          <ul>
+            {result.map((item, index) => (
+              <li key={index} style={{ display: 'flex', alignItems: 'center' }}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    width: '30px',
+                    height: '10px',
+                    backgroundColor: colors[index],
+                    marginRight: '8px',
+                  }}
+                />
+                {item.label} ({(item.score * 100).toFixed(2)}%)
+              </li>
+            ))}
+          </ul>
+          <button onClick={generateNewImage} className="generate-new-button">
+            Generate New Image Detection
+          </button>
         </div>
       )}
     </div>
