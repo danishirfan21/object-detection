@@ -120,9 +120,9 @@ const ObjectDetection = () => {
         <input {...getInputProps()} />
         <p>Drag 'n' drop an image here, or click to select one</p>
       </div>
-      {loading && <p>Loading...</p>}
+      {loading && <div className="spinner"></div>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      {imageSrc && (
+      {imageSrc && !loading && !error && (
         <div className="image-comparison-container">
           <div className="original-image">
             <h2>Original Image</h2>
@@ -165,7 +165,7 @@ const ObjectDetection = () => {
           </div>
         </div>
       )}
-      {result && (
+      {!loading && !error && result && (
         <div
           style={{
             marginTop: '40px',
